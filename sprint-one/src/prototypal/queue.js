@@ -1,20 +1,22 @@
 var Queue = function(){
-  // Hey! Rewrite in the new style. Your code will wind up looking very similar,
-  // but try not not reference your old code in writing the new style.
+	// Hey! Rewrite in the new style. Your code will wind up looking very similar,
+	// but try not not reference your old code in writing the new style.
 
-  var someInstance = Object.create(Queue.prototype);
+	var someInstance = Object.create(queueMethods);
 
-  someInstance.storage = {};
-  someInstance.length = 0;
+	someInstance.storage = {};
+	someInstance.length = 0;
 
-  return someInstance;
+	return someInstance;
 };
 
-Queue.prototype.enqueue = function(value) {
+var queueMethods = {};
+
+queueMethods.enqueue = function(value) {
 	this.storage[this.length++] = value;
 };
 
-Queue.prototype.dequeue = function() {
+queueMethods.dequeue = function() {
 	var val = this.storage[0];
 
 	if (this.length > 0) {
@@ -29,6 +31,6 @@ Queue.prototype.dequeue = function() {
 	return val;
 };
 
-Queue.prototype.size = function() {
+queueMethods.size = function() {
 	return this.length;
 };
