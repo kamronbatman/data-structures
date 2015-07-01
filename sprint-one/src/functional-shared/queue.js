@@ -7,9 +7,7 @@ var Queue = function(){
   someInstance.storage = {};
   someInstance.length = 0;
 
-  someInstance.enqueue = queueMethods["enqueue"];
-  someInstance.dequeue = queueMethods["dequeue"];
-  someInstance.size = queueMethods["size"];
+  _.extend(someInstance, queueMethods);
 
   return someInstance;
 };
