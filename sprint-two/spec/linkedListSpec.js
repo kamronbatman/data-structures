@@ -23,6 +23,15 @@ describe('linkedList', function() {
     expect(linkedList.tail.value).to.equal(5);
   });
 
+  it('should have former head pointing backwards to new head', function(){
+    linkedList.addToHead(4);
+    expect(linkedList.head.value).to.equal(4);
+    expect(linkedList.head.previous).to.equal(null);
+    linkedList.addToHead(5);
+    expect(linkedList.head.value).to.equal(5);
+    expect(linkedList.tail.previous.value).to.equal(5);
+  })
+
   it('should remove the head from the list when removeHead is called', function(){
     linkedList.addToTail(4);
     linkedList.addToTail(5);
