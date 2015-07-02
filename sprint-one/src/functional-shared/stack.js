@@ -7,7 +7,6 @@ var Stack = function() {
   someInstance.storage = {};
   someInstance.length = 0;
 
-
   _.extend(someInstance, stackMethods);
 
   return someInstance;
@@ -20,13 +19,7 @@ stackMethods.push = function(value){
 };
 
 stackMethods.pop = function(){
-	var val = this.storage[this.length-1];
-
-	if (this.length > 0){
-	  delete this.storage[--this.length];
-	}
-
-	return val;
+	return this.length > 0 ? this.storage[--this.length] : undefined;
 };
 
 stackMethods.size = function(){
