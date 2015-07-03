@@ -19,9 +19,9 @@ treeMethods.addChild = function(value){
 treeMethods.contains = function(target){
   if (this.value === target) { return true; }
 
-  return _.reduce(this.children, function(found, child){
-    return found || child.contains(target);
-  }, false);
+  return Boolean(_.find(this.children, function(found, child){
+    return child.contains(target);
+  }));
 };
 
 treeMethods.removeFromParent = function(){

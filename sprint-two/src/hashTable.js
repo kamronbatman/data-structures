@@ -43,11 +43,12 @@ HashTable.prototype.remove = function(k){
   var i = getIndexBelowMaxForKey(k, this._limit);
   this._storage.set(i, _.reject(this._storage.get(i), function(item){
     var found = item[0] === k;
-    if(found) { thisHash._size--; }
+    if ( found ) thisHash._size--;
+
     return found;
   }));
 
-  if (this._size * 0.25 < this._limit){
+  if (this._size < 0.25 * this._limit){
     this.halveSize();
   }
 };

@@ -5,8 +5,10 @@ var LinkedList = function(){
 
   list.addToTail = function(value){
     var newNode = Node(value);
+
     if (!list.head) { list.head = newNode; }
-    if (list.tail){
+
+    if (list.tail) {
       list.tail.next = newNode;
       //Doubly Linked
       newNode.previous = list.tail;
@@ -22,7 +24,7 @@ var LinkedList = function(){
     list.head = list.head.next;
 
     //Doubly Linked
-    if(list.head) {
+    if (list.head) {
       list.head.previous = null;
     }
 
@@ -33,7 +35,10 @@ var LinkedList = function(){
     var node = list.head;
 
     while (node !== null) {
-      if (node.value === target) { return true; }
+      if (node.value === target) {
+        return true;
+      }
+
       node = node.next;
     }
 
@@ -43,15 +48,20 @@ var LinkedList = function(){
   //Doubly Linked
   list.addToHead = function(value) {
     var newNode = Node(value);
+
     if (list.head) list.head.previous = newNode;
+
     newNode.next = list.head;
     list.head = newNode;
-    if(!list.tail) list.tail = newNode;
+
+    if (!list.tail) list.tail = newNode;
   }
 
   //Doubly Linked
   list.removeTail = function() {
-    if (!list.tail) { return undefined; }
+    if (!list.tail) {
+      return undefined;
+    }
 
     var value = list.tail.value;
 
