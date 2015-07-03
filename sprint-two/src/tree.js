@@ -2,7 +2,6 @@ var Tree = function(value,parent){
   var newTree = {};
   newTree.value = value;
   newTree.parent = parent || null;
-  // your code here
   newTree.children = [];
 
   _.extend(newTree, treeMethods);
