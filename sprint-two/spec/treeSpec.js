@@ -50,4 +50,18 @@ describe('tree', function() {
     expect(tree.contains(8)).to.equal(false);
   });
 
+  it('should traverse tree', function(){
+    var traversal = [];
+    var cb = function(node){
+      traversal.push(node.value);
+    };
+    tree.value = 4;
+    tree.addChild(5);
+    tree.addChild(6);
+    tree.children[0].addChild(7);
+    tree.children[1].addChild(8);
+    tree.traverse(cb);
+    expect(traversal).to.eql([4,5,7,6,8]);
+
+  });
 });
