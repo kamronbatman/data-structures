@@ -7,15 +7,15 @@ var Set = function(){
 var setPrototype = {};
 
 setPrototype.add = function(item){
-  this._storage[item] = true;
+  this._storage[JSON.stringify(item)] = true;
 };
 
 setPrototype.contains = function(item){
-  return item in this._storage;
+  return JSON.stringify(item) in this._storage;
 };
 
 setPrototype.remove = function(item){
-  delete this._storage[item];
+  delete this._storage[JSON.stringify(item)];
 };
 
 /*
