@@ -41,14 +41,16 @@ HashTable.prototype.retrieve = function(k){
 HashTable.prototype.remove = function(k){
   var thisHash = this;
 
-  var i = getIndexBelowMaxForKey(k, this._limit);
-  // var currentBucket = this._storage.get(i);
-  this._storage.set(i, _.reject(this._storage.get(i), function(item){
-    var found = item[0] === k;
-    if ( found ) { --thisHash._size };
+  var bucket = this._storage.get(getIndexBelowMaxForKey(k, this._limit));
 
-    return found;
-  }));
+  _.find(bucket, function(kvp, index, bucket){
+    if ( kvp === k ) {
+      bucket.splice(index, 1 ); 
+      return true;
+    }
+
+    return false;
+  })
 
   if (this._size < 0.25 * this._limit) {
     this.halveSize();
@@ -107,6 +109,7 @@ HashTable.prototype.toString = function(){
   str = str + ']';
   return str;
 }
+
 /*
  * Complexity: What is the time complexity of the above functions?
  * insert: O(remove + 1) = O(n)

@@ -65,4 +65,11 @@ describe('binarySearchTree', function() {
     expect(array).to.eql([5,2,8,1,3,7,9,4]);
   });
 
+  it('should calculate minimum and maximum tree depths',function(){
+    // empty tree
+    // root only
+    // all right
+    // m:1 M:5 tree
+
+  })
 });
