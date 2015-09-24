@@ -19,7 +19,7 @@ treeMethods.addChild = function(value){
 treeMethods.contains = function(target){
   if (this.value === target) { return true; }
 
-  return Boolean(_.find(this.children, function(found, child){
+  return Boolean(_.find(this.children, function(child){
     return child.contains(target);
   }));
 };

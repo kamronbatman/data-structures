@@ -19,6 +19,7 @@ HashTable.prototype.insert = function(k, v){
   }
   this._storage.get(i).push([k,v]);
   this._size++;
+
   if(this._size > 0.75 * this._limit){
     this.doubleSize();
   }
@@ -40,24 +41,28 @@ HashTable.prototype.retrieve = function(k){
 HashTable.prototype.remove = function(k){
   var thisHash = this;
 
-  var i = getIndexBelowMaxForKey(k, this._limit);
-  this._storage.set(i, _.reject(this._storage.get(i), function(item){
-    var found = item[0] === k;
-    if ( found ) thisHash._size--;
+  var bucket = this._storage.get(getIndexBelowMaxForKey(k, this._limit));
 
-    return found;
-  }));
+  _.find(bucket, function(kvp, index, bucket){
+    if ( kvp === k ) {
+      bucket.splice(index, 1 ); 
+      return true;
+    }
 
-  if (this._size < 0.25 * this._limit){
+    return false;
+  })
+
+  if (this._size < 0.25 * this._limit) {
     this.halveSize();
   }
 };
 
 HashTable.prototype.rehash = function(){
+  var thisHash = this;
   var newStorage = LimitedArray(this._limit);
   this._storage.each(function(bucket){
     _.each(bucket, function(kvp){
-      var i = getIndexBelowMaxForKey(kvp[0], this._limit);
+      var i = getIndexBelowMaxForKey(kvp[0], thisHash._limit);
       if ( !newStorage.get(i) ) newStorage.set(i, []);
       newStorage.get(i).push([kvp[0],kvp[1]]);
     })
@@ -72,14 +77,37 @@ HashTable.prototype.doubleSize = function(){
 }
 
 HashTable.prototype.halveSize = function(){
-  this._limit = Math.max((this._limit/2)|0, this.lowestLimit);
-  this.rehash();
+  var oldlimit = this._limit;
+
+  this._limit = Math.floor(this._limit / 2);
+  if (this._limit < this._lowestLimit) {
+    this._limit = this._lowestLimit;
+  }
+
+  if (oldlimit != this._limit) {
+    this.rehash();
+  }
 }
 
 HashTable.prototype.sizeUsed = function(){
   return _.reduce(this._storage.storage, function(acc, bucket){
-    return acc + (bucket && bucket.length > 0) ? 1 : 0;
+    if (bucket){
+      acc += bucket.length;
+    }
+
+    return acc;
   },0);
+}
+
+HashTable.prototype.toString = function(){
+  var str = '[';
+  _.each(this._storage.storage, function(bucket){
+    str += '[';
+    str += bucket;
+    str += ']';
+  });
+  str = str + ']';
+  return str;
 }
 
 /*
